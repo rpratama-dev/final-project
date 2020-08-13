@@ -12,7 +12,7 @@ Repo ini di bangun untuk bekerja dan berkolaborasi dengan team untuk mengerjakan
 
 * Masuk ke direktori project, lalu clone repo ini
 ```bash
-$ git clone https://github.com/rpratama94/final-project.git
+$ cd project
 ```
 
 * Masuk ke direktori project, lalu clone repo ini
