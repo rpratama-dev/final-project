@@ -29429,7 +29429,7 @@ a.text-muted:hover {
 }
 
 .link-black:hover, .link-black:focus {
-  color: #e6e8ea;
+  color: #e6e8ea; /* */
 }
 
 .accent-primary .btn-link,
