@@ -4,7 +4,7 @@
 
 <div class="register-box">
   <div class="register-logo">
-    {{ config('app.name', 'Laravel') }}
+    <b>{{ config('app.name', 'Laravel') }}</b>
   </div>
 
   <div class="card">

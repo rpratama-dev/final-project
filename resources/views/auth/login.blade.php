@@ -4,7 +4,7 @@
 
 <div class="login-box">
   <div class="login-logo">
-    {{ config('app.name', 'Laravel') }}
+    <b>{{ config('app.name', 'Laravel') }}</b>
   </div>
   <!-- /.login-logo -->
   <div class="card">
