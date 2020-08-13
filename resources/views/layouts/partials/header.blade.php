@@ -9,7 +9,7 @@
         <a href="/" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Pertanyaan</a>
+        <a href="/pertanyaan/create" class="nav-link">Pertanyaan</a>
       </li>
       @guest
           <li class="nav-item">
