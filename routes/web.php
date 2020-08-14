@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//ROUTE : Resource Question (All in one)
+Route::resource('question', 'Question\QuestionController');
+
+//ROUTE : Resource Question (All in one)
+Route::resource('answer', 'Answer\AnswerController');
+
 
 Route::get('/', function () {
     return view('questions.index');
@@ -32,6 +38,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 //ROUTE : Pertanyaan
 Route::get('/pertanyaan/create', 'PertanyaanController@create');
 
-
 //Route : Jawaban
-Route :: get('/jawaban/{idq}/create', 'JawabanController@create');
+Route::get('/jawaban/{idq}/create', 'JawabanController@create');
+
