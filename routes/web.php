@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('index.index');
 });
 
+Route::get('/detail', function () {
+    return view('index.detail');
+});
+
 Route::get('/master', function () {
     return view('layouts.master');
 });
