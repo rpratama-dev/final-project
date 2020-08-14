@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 
 Route::get('/detail', function () {
-    return view('index.detail');
+    return view('questions.detail');
 });
 
 Route::get('/master', function () {

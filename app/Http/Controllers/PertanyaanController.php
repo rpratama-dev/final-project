@@ -7,6 +7,6 @@ use Illuminate\Http\Request;
 class PertanyaanController extends Controller
 {
     public function create() {
-        return view ('pertanyaan/create');
+        return view ('questions.create');
     }
 }
