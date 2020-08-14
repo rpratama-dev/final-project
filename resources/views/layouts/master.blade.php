@@ -65,12 +65,12 @@
       <!-- Yield Content -->
 
       @yield('content')
-      
+
       <!-- /.conten -->
 
     </section>
     <!-- /.content -->
-    
+
   </div>
   <!-- /.content-wrapper -->
 
