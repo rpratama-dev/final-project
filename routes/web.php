@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('index.index');
+    return view('questions.index');
 });
 
 Route::get('/detail', function () {
