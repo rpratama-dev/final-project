@@ -14,8 +14,13 @@ class CreateVoteAnswersTable extends Migration
     public function up()
     {
         Schema::create('vote_answers', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->boolean('status');
             $table->timestamps();
+            $table->integer('user_id')->unsigned();
+            $table->integer('answer_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->nullable();
+            $table->foreign('answer_id')->references('id')->on('answers')->nullable();
         });
     }
 
@@ -26,6 +31,7 @@ class CreateVoteAnswersTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('vote_answers');
     }
 }

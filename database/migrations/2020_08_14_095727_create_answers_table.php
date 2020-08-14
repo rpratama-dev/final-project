@@ -14,8 +14,14 @@ class CreateAnswersTable extends Migration
     public function up()
     {
         Schema::create('answers', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->longText('answer');
             $table->timestamps();
+            $table->integer('user_id')->unsigned();
+            $table->integer('question_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->nullable();
+            $table->foreign('question_id')->references('id')->on('questions')->nullable();
+            
         });
     }
 
@@ -25,7 +31,8 @@ class CreateAnswersTable extends Migration
      * @return void
      */
     public function down()
-    {
+    { 
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('answers');
     }
 }

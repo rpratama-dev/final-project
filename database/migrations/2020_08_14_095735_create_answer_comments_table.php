@@ -14,8 +14,13 @@ class CreateAnswerCommentsTable extends Migration
     public function up()
     {
         Schema::create('answer_comments', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->longText('comment');
             $table->timestamps();
+            $table->integer('user_id')->unsigned();
+            $table->integer('answer_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->nullable();
+            $table->foreign('answer_id')->references('id')->on('answers')->nullable();
         });
     }
 
@@ -26,6 +31,7 @@ class CreateAnswerCommentsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('answer_comments');
     }
 }

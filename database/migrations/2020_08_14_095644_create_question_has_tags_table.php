@@ -14,8 +14,11 @@ class CreateQuestionHasTagsTable extends Migration
     public function up()
     {
         Schema::create('question_has_tags', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->increments('id');
+            $table->integer('question_id')->unsigned();
+            $table->integer('tag_id')->unsigned();
+            $table->foreign('question_id')->references('id')->on('questions')->nullable();
+            $table->foreign('tag_id')->references('id')->on('tags')->nullable();
         });
     }
 
@@ -26,6 +29,7 @@ class CreateQuestionHasTagsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('question_has_tags');
     }
 }

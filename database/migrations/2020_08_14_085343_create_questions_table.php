@@ -16,9 +16,10 @@ class CreateQuestionsTable extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('judul');
-            $table->longText('pertanyaan'); 
+            $table->longText('isi'); 
             $table->timestamps();
-            $table->integer('user_id');
+            $table->integer('user_id')->unsigned();
+            $table->integer('jawaban_terbaik_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->nullable();
          });
     }
