@@ -15,12 +15,15 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('judul');
-            $table->longText('isi'); 
+            $table->string('judul', 255);
+            $table->longText('isi');
+            $table->string('tag', 255); 
+            $table->integer('votes')->unsigned()->nullable(); 
             $table->timestamps();
             $table->integer('user_id')->unsigned();
             $table->integer('jawaban_terbaik_id')->unsigned()->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->nullable()->constrained()->onDelete('cascade'); 
+
          });
     }
 

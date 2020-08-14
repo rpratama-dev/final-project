@@ -17,8 +17,8 @@ class CreateQuestionHasTagsTable extends Migration
             $table->increments('id');
             $table->integer('question_id')->unsigned();
             $table->integer('tag_id')->unsigned();
-            $table->foreign('question_id')->references('id')->on('questions')->nullable();
-            $table->foreign('tag_id')->references('id')->on('tags')->nullable();
+            $table->foreign('question_id')->references('id')->on('questions')->nullable()->constrained()->onDelete('cascade');
+            $table->foreign('tag_id')->references('id')->on('tags')->nullable()->constrained()->onDelete('cascade'); 
         });
     }
 

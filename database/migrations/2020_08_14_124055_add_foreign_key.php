@@ -15,7 +15,7 @@ class AddForeignKey extends Migration
     {
         //untuk menambahkan foreign key dengan migration
         Schema::table('questions', function (Blueprint $table) { 
-            $table->foreign('jawaban_terbaik_id')->references('id')->on('answers')->nullable();
+            $table->foreign('jawaban_terbaik_id')->references('id')->on('answers')->nullable()->constrained()->onDelete('cascade'); 
          });
     }
 

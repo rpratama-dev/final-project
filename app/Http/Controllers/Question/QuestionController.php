@@ -4,10 +4,19 @@ namespace App\Http\Controllers\Question;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Questions\Question; 
+use App\Models\Question\Question; 
+use App\Models\Question\QuestionHasTag; 
+use App\Models\Question\Tag; 
+use Illuminate\Support\Facades\DB;
 
 class QuestionController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index']); 
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +24,21 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        //
+        //$questions = Question::all()->sortByDesc("id");
+        $questions = DB::table('questions')
+            ->leftJoin('answers', 'questions.id', '=', 'answers.question_id')
+            ->leftJoin('users', 'questions.user_id', '=', 'users.id')
+            ->selectRaw('questions.*, users.name, users.photo_dir, users.point_reputasi, count(answers.question_id) as answer_count')
+            ->groupBy('questions.id')
+            ->get();   
+        /* 
+        $questions = DB::table('questions')
+            ->select(DB::raw('questions.*, count(answers.question_id) as answer_count'))
+            ->join('answers', 'questions.id', '=', 'answers.question_id') 
+            ->get();*/
+
+        return view('questions.index', ['questions' => $questions])
+            ->with('page', 'Pertanyaan Terbaru'); 
     }
 
     /**

@@ -19,8 +19,8 @@ class CreateVoteQuestionsTable extends Migration
             $table->timestamps();
             $table->integer('user_id')->unsigned();
             $table->integer('question_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->nullable();
-            $table->foreign('question_id')->references('id')->on('questions')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->nullable()->constrained()->onDelete('cascade'); 
+            $table->foreign('question_id')->references('id')->on('questions')->nullable()->constrained()->onDelete('cascade'); 
         });
     }
 

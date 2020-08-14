@@ -29,57 +29,50 @@
     </div><!-- /.card-header -->
     <div class="card-body"> 
         <!-- Post -->
+        @foreach($questions as $question)
         <div class="post clearfix">
             <div class="user-block"> 
-                <b><a href="{{ route('question.show', ['question' => 1]) }}">Judul Pertanyaan</a> </b> 
+                <b><a href="{{ route('question.show', ['question' => 1]) }}">{{ $question->judul }}</a> </b> 
                 <div class="float-auto">
-                    <span class="text-grey">Asked : 12-08-2020 15:00:00 </span> <b> | </b>
-                    <span >Viewed 8K</span> 
+                    <span class="text-grey">Asked : {{ $question->created_at }} </span> <b> | </b>
+                    <span >Last Update : {{ $question->updated_at }}</span> 
                 </div>
                 <hr class="mb-0 mt-2 pb-0">
             </div>
           <!-- /.user-block -->  
-          <p>
-            Lorem ipsum represents a long-held tradition for designers,
-            typographers and the like. Some people hate it and argue for
-            its demise, but others ignore the hate as they create awesome
-            tools to help create filler text for everyone from bacon lovers
-            to Charlie Sheen fans.
-          </p>
+          {!! $question->isi !!}
 
             <div class="row ml-1">
               <div>
                 <div class="float-left">
-                    <button type="button" class="btn btn-warning btn-xs"> Tags</button> 
-                    <button type="button" class="btn btn-warning btn-xs"> Tags</button> 
-                    <button type="button" class="btn btn-warning btn-xs"> Tags</button> 
-                    <button type="button" class="btn btn-warning btn-xs"> Tags</button> 
-                    <button type="button" class="btn btn-warning btn-xs"> Tags</button> 
-                    <button type="button" class="btn btn-warning btn-xs"> Tags</button> 
+                    @foreach (explode (",", $question->tag) as $key => $value)
+                        {{ $loop->first ? '' : '' }} 
+                    <button type="button" class="btn btn-warning btn-xs">{{ $value }}</button>  
+                    @endforeach
                 </div> 
               </div>
               <div class="ml-auto mr-3">
                 <div class="user-block float-right">
-                    <img class="img-circle img-bordered-sm" src="{{ asset('adminlte/dist/img/user7-128x128.jpg') }}" alt="User Image">
+                    <img class="img-circle img-bordered-sm" src="{{ asset($question->photo_dir) }}" alt="User Image">
                     <span class="username">
-                      <a href="#">Sarah Ross</a> 
+                      <a href="#">{{ $question->name }}</a> 
                     </span>
-                    <span class="description">reputasi (10)</span>
+                    <span class="description">reputasi ({{ $question->point_reputasi }})</span>
                 </div> 
               </div>
             </div>  
             <p class="mb-0">
-                <span class="link-black text-sm mr-2"><i class="fas fa-caret-square-up mr-1"></i> 2 upvote </span>
-                <span class="link-black text-sm"><i class="fas fa-caret-square-down mr-1"></i> 3 downvote </span>
-                <span class="float-right">
+                <span class="link-black text-sm mr-2"><i class="fas fa-caret-square-up mr-1"></i>{{ $question->votes }} Vote</span> 
                   <span class="link-black text-sm">
-                    <i class="far fa-comments mr-1"></i> Answer (5)
+                    <i class="far fa-comments mr-1"></i> Answer ({{ $question->answer_count }})
                   </span>
+                <span class="float-right">
                 </span>
             </p>  
         </div>
         <!-- /.post --> 
-        </div>
+        @endforeach
+      </div>
         <!-- /.tab-pane -->
     </div> 
 @endsection

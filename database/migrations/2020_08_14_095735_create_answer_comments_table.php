@@ -19,8 +19,8 @@ class CreateAnswerCommentsTable extends Migration
             $table->timestamps();
             $table->integer('user_id')->unsigned();
             $table->integer('answer_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->nullable();
-            $table->foreign('answer_id')->references('id')->on('answers')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->nullable()->constrained()->onDelete('cascade'); 
+            $table->foreign('answer_id')->references('id')->on('answers')->nullable()->constrained()->onDelete('cascade'); 
         });
     }
 
