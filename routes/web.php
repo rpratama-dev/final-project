@@ -29,4 +29,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+//ROUTE : Pertanyaan
 Route::get('/pertanyaan/create', 'PertanyaanController@create');
+
+
+//Route : Jawaban
+Route :: get('/jawaban/{idq}/create', 'JawabanController@create');
