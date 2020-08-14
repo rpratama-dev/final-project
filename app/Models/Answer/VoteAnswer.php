@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Model\Answer;
+namespace App\Models\Answer;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Answer extends Model
+class VoteAnswer extends Model
 {
     //
 }

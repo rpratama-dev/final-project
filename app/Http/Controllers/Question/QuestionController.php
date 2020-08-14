@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Question;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Model\Question\Question; 
+use App\Models\Questions\Question; 
 
 class QuestionController extends Controller
 {
@@ -25,7 +25,7 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        //
+        return view('questions.create');
     }
 
     /**
@@ -45,9 +45,9 @@ class QuestionController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function show(Question $question)
+    public function show( $question) //Question $question
     {
-        //
+        return view('questions.detail');
     }
 
     /**

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Question;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Model\Question\QuestionComment; 
+use App\Models\Questions\QuestionComment; 
 
 class QuestionCommentController extends Controller
 {

@@ -31,7 +31,7 @@
         <!-- Post -->
         <div class="post clearfix">
             <div class="user-block"> 
-                <b><a href="#">Judul Pertanyaan</a> </b> 
+                <b><a href="{{ route('question.show', ['question' => 1]) }}">Judul Pertanyaan</a> </b> 
                 <div class="float-auto">
                     <span class="text-grey">Asked : 12-08-2020 15:00:00 </span> <b> | </b>
                     <span >Viewed 8K</span> 

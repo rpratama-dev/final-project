@@ -12,10 +12,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+/*
+| Cara buat Route, menggunakan resource. supaya semua route di generate otomatis.
+| Cek Route : php artisan route:list
+ */
+
 //ROUTE : Resource Question (All in one)
 Route::resource('question', 'Question\QuestionController');
 
-//ROUTE : Resource Question (All in one)
+//ROUTE : Resource Answer (All in one)
 Route::resource('answer', 'Answer\AnswerController');
 
 
@@ -33,11 +39,5 @@ Route::get('/master', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-//ROUTE : Pertanyaan
-Route::get('/pertanyaan/create', 'PertanyaanController@create');
-
-//Route : Jawaban
-Route::get('/jawaban/{idq}/create', 'JawabanController@create');
+Route::get('/home', 'HomeController@index')->name('home'); 
 

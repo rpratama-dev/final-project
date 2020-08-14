@@ -44,7 +44,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="/pertanyaan/create" class="nav-link">
+            <a href="{{ route('question.create') }}" class="nav-link">
               <i class="nav-icon fas fa-edit"></i>
               <p>
                 CREATE QUESTIONS
