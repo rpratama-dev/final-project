@@ -27,7 +27,7 @@ Route::resource('answer', 'Answer\AnswerController');
 
 Route::get('/', function () {
     return redirect('question');
-});
+})->name('welcome');
 
 Route::get('/detail', function () {
     return view('questions.detail');

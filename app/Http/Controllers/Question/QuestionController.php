@@ -38,7 +38,7 @@ class QuestionController extends Controller
             ->get();*/
 
         return view('questions.index', ['questions' => $questions])
-            ->with('page', 'Pertanyaan Terbaru'); 
+            ->with('page', 'Top Question'); 
     }
 
     /**
@@ -68,9 +68,11 @@ class QuestionController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function show( $question) //Question $question
+    public function show(Question $question) 
     {
-        return view('questions.detail');
+        //dd($question);
+        return view('questions.show', ["question" => $question,])
+            ->with('page', 'Detail Question'); ;
     }
 
     /**
