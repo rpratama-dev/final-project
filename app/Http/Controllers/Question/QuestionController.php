@@ -159,7 +159,6 @@ class QuestionController extends Controller
      */
     public function update($question, Request $request)
     {
-        $this->validasi($request);
         $query = DB::table('questions') 
         -> where('id', $question)
         -> update([
