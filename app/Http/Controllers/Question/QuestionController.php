@@ -61,8 +61,15 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //$this->validasi($request);
+        $this->validasi($request);
         
+        $tag = $request['tags'];
+        foreach ($tag as $t) {
+            $query = DB::table('tags') -> insert([
+                'tag_name' => $t
+            ]);
+        }
+
         //dd($request); //print value as array
 
         $user = auth()->user();
@@ -74,7 +81,8 @@ class QuestionController extends Controller
             'updated_at' => $ldate = date('Y-m-d H:i:s'),
             'user_id' => $user->id,
         ]);
-
+        
+        
         return redirect()->route('question.index');
 
     }
@@ -151,6 +159,7 @@ class QuestionController extends Controller
      */
     public function update($question, Request $request)
     {
+        $this->validasi($request);
         $query = DB::table('questions') 
         -> where('id', $question)
         -> update([
