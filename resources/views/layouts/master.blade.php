@@ -66,9 +66,9 @@
 
 
       @if(session('success'))
-          <div class="alert alert-success alert-dismissible">
+          <div class="alert alert-{{ session('alert') }} alert-dismissible">
           <button type="button" class="close text-white" data-dismiss="alert" aria-hidden="true">&times;</button>
-          <h5><i class="icon fas fa-check"></i> Success!</h5>
+          <h5><i class="icon fas fa-check"></i> {{ session('alert') }}!</h5>
           {{ session('success')}}
           </div>
       @endif

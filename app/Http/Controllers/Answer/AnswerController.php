@@ -6,11 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Answer\Answer; 
+use App\Models\Question\Question; 
 use Illuminate\Http\Request; 
 use App\User;  
 
 class AnswerController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index']); 
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -47,7 +53,9 @@ class AnswerController extends Controller
             'question_id' => $request->question_id,
         ]);
 
-        return redirect(route('question.show', ['question' => $request->question_id]))->with('success','Your answer submited');
+        return redirect(route('question.show', ['question' => $request->question_id]))
+                    ->with('success','Your answer submited')
+                    ->with('alert','success');
     }
 
     /**
@@ -81,7 +89,22 @@ class AnswerController extends Controller
      */
     public function update(Request $request, Answer $answer)
     {
-        //
+        $answer_id = $request->input('answer_id');
+        $question_id = $request->input('question_id');
+        $user_id = $request->input('user_id');
+        $flight = Question::find($question_id); 
+        $flight->jawaban_terbaik_id = $answer_id; 
+        $flight->save();  
+
+        $answer = Answer::find($answer_id); 
+        $answer->is_best_answer = 1; 
+        $answer->save(); 
+
+        User::find($user_id)->increment('point_reputasi', 15);    
+
+        return redirect(route('question.show', ['question' => $answer_id]))
+                    ->with('success','Best answer selected.')
+                    ->with('alert','success'); 
     }
 
     /**

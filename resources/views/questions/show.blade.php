@@ -2,13 +2,24 @@
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/summernote/summernote-bs4.css') }}">
+    <style type="text/css">
+    	.fa-check:hover {
+		    color: #28a745;
+		} 
+		.fa-caret-up:hover {
+			color: #28a745;
+		}
+		.fa-caret-down:hover {
+			color: #28a745;
+		}
+    </style>
 @endpush
 @section('content')
 
 <div class="col-md-12">
     <div class="card">
       <div class="card-header p-2"> 
-        <h5 class="card-title ml-2">{{-- count($question) --}} Answer</h5> 
+        <h5 class="card-title ml-2">{{ count($answers) }} Answer</h5> 
         <div class="card-tools mr-2">
           <button type="button" class="btn btn-sm btn-outline-primary text-dark">
             Newest
@@ -46,12 +57,28 @@
 	            <tr class=""> 
 	                <td class="m-0 p-0 " style="width: 50px; border:0">
 	                	<div class="col-md-12" style="font-size: 30px; color:#606060; text-align: center;"> 
-                    		<span class="link-black text-xl col-md-12" 
+                    		<a href="{{ route('vote-question.store') }}"><span class="link-black text-xl col-md-12" 
                     			title="This question shows research effort; it is useful and clear">
-	                      		<i class="fas fa-caret-up mr-1"></i>
-	                      	</span> 
-		                    <span class="text-xl col-md-12 mr-2"> 0 </span>
-		                    <span class="link-black col-md-12 text-xl mr-1" title="This question does not show any research effort; it is unclear or not useful"><i class="fas fa-caret-down mr-1"></i></span>
+	                      		<i class="fas fa-caret-up mr-1" onclick="
+	                      		event.preventDefault(); document.getElementById('upvote').submit();"></i>
+	                      	</span> </a>
+		                    <span class="text-xl col-md-12 mr-2"> {{ app(App\Http\Controllers\Question\VoteQuestionController::class)->count_vote($question->id) }} </span>
+		                    <a href="{{ route('vote-question.store') }}"><span class="link-black col-md-12 text-xl mr-1" title="This question does not show any research effort; it is unclear or not useful"><i class="fas fa-caret-down mr-1"onclick="
+	                      		event.preventDefault(); document.getElementById('downvote').submit();"></i></span></a>
+                  		</div> 
+                  		<div> 
+			                  <form id="upvote" action="{{ route('vote-question.store') }}" method="POST" style="display: none;">
+			                      	@csrf 
+          							<input type="hidden" name="status" value="1"> 
+          							<input type="hidden" name="question_id" value="{{ $question->id }}">
+                        			<input type="hidden" name="user_id" value="{{ $question->user_id }}">
+			                  </form> 
+			                  <form id="downvote" action="{{ route('vote-question.store') }}" method="POST" style="display: none;">
+			                      	@csrf 
+          							<input type="hidden" name="status" value="0"> 
+          							<input type="hidden" name="question_id" value="{{ $question->id }}">
+                        			<input type="hidden" name="user_id" value="{{ $question->user_id }}">
+			                  </form>
                   		</div>    
 	                </td> 
 	                <td style="border:0">

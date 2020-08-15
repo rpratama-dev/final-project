@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->string('photo_dir', 255)->nullable();
-            $table->integer('point_reputasi')->nullable();
+            $table->integer('point_reputasi')->default('0')->nullable();
             $table->timestamps();
         });
     }

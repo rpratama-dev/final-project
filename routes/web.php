@@ -24,6 +24,10 @@ Route::resource('question', 'Question\QuestionController');
 Route::resource('question-comment', 'Question\QuestionCommentController');
 //ROUTE : Resource Answer (All in one)
 Route::resource('answer-comment', 'Answer\AnswerCommentController');
+//ROUTE : Resource Answer (All in one)
+Route::resource('vote-answer', 'Answer\VoteAnswerController');
+//ROUTE : Resource Answer (All in one)
+Route::resource('vote-question', 'Question\VoteQuestionController');
 
 //ROUTE : Resource Answer (All in one)
 Route::resource('answer', 'Answer\AnswerController');

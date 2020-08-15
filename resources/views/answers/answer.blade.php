@@ -1,18 +1,56 @@
-@foreach($answers as $answer)
-
-
+@foreach($answers as $answer) 
 <div class="post clearfix">   
     <table class="table border-0 p-0 m-0" style="border:0">
         <tr class=""> 
             <td class="m-0 p-0 " style="width: 50px; border:0">
                 <div class="col-md-12" style="font-size: 30px; color:#606060; text-align: center;"> 
-                    <span class="link-black text-xl col-md-12" 
-                      title="This question shows research effort; it is useful and clear">
-                        <i class="fas fa-caret-up mr-1"></i>
-                    </span> 
-                    <span class="text-xl col-md-12 mr-2"> 0 </span>
-                    <span class="link-black col-md-12 text-xl mr-1" title="This question does not show any research effort; it is unclear or not useful"><i class="fas fa-caret-down mr-1"></i></span>
-                </div>    
+                  <a href="{{ route('vote-answer.store') }}"><span class="link-black text-xl col-md-12" 
+                    title="This question shows research effort; it is useful and clear">
+                      <i class="fas fa-caret-up mr-1" onclick="
+                      event.preventDefault(); document.getElementById('answer_upvote{{ $answer->id }}').submit();"></i>
+                    </span> </a>
+                  <span class="text-xl col-md-12 mr-2"> {{ app(App\Http\Controllers\Answer\VoteAnswerController::class)->count_vote($answer->id) }} </span>
+                  <a href="{{ route('vote-answer.store') }}"><span class="link-black col-md-12 text-xl mr-1" title="This question does not show any research effort; it is unclear or not useful"><i class="fas fa-caret-down mr-1"onclick="
+                      event.preventDefault(); document.getElementById('answer_downvote{{ $answer->id }}').submit();"></i></span></a>
+                </div> 
+                @if ($question->jawaban_terbaik_id < 1)
+                <a href="{{ route('answer.update', ['answer' => $answer->id]) }}">
+                  <span class="text-xl col-md-12 mr-2 text-secondary" onclick="
+                      event.preventDefault(); document.getElementById('best_answer{{ $answer->id }}').submit();"> 
+                      <i class="fas fa-check mr-1"></i> 
+                  </span>
+                </a> 
+                @else
+                  @if($answer->is_best_answer > 0)
+                    <span class="text-xl col-md-12 mr-2 text-success"> 
+                      <i class="fas fa-check mr-1"></i> 
+                  </span>
+                  @endif
+                @endif
+                <div> 
+                  <form id="answer_upvote{{ $answer->id }}" action="{{ route('vote-answer.store') }}" method="post" style="display: none;">
+                  @csrf 
+                  <input type="hidden" name="vote_status" value="1"> 
+                  <input type="hidden" name="answer_ids" value="{{ $answer->id }}">
+                  <input type="hidden" name="question_id" value="{{ $question->id }}">
+                  <input type="hidden" name="user_id" value="{{ $answer->user_id }}">
+                  </form> 
+                  <form id="answer_downvote{{ $answer->id }}" action="{{ route('vote-answer.store') }}" method="post" style="display: none;">
+                  @csrf 
+                  <input type="hidden" name="vote_status" value="0"> 
+                  <input type="hidden" name="answer_ids" value="{{ $answer->id }}">
+                  <input type="hidden" name="question_id" value="{{ $question->id }}">
+                  <input type="hidden" name="user_id" value="{{ $answer->user_id }}">
+                  </form>
+
+                  <form id="best_answer{{ $answer->id }}" action="{{ route('answer.update', ['answer' => $answer->id]) }}" method="post" style="display: none;">
+                  @csrf 
+                  @method('PUT') 
+                  <input type="hidden" name="question_id" value="{{ $question->id }}"> 
+                  <input type="hidden" name="answer_id" value="{{ $answer->id }}"> 
+                  <input type="hidden" name="user_id" value="{{ $answer->user_id }}"> 
+                  </form>
+                </div>        
             </td> 
             <td style="border:0">
 
