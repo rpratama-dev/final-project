@@ -64,13 +64,15 @@ class QuestionController extends Controller
         //$this->validasi($request);
         
         //dd($request); //print value as array
+
+        $user = auth()->user();
         $query = DB::table('questions') -> insert([
             'judul' => $request['title'], 
             'isi' => $request['question'],
             'tag' => $request['tags'][0],
             'created_at' => $ldate = date('Y-m-d H:i:s'),
             'updated_at' => $ldate = date('Y-m-d H:i:s'),
-            'user_id' => 1,
+            'user_id' => $user->id,
         ]);
 
         return redirect()->route('question.index');
