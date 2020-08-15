@@ -64,6 +64,15 @@
 
       <!-- Yield Content -->
 
+
+      @if(session('success'))
+          <div class="alert alert-success alert-dismissible">
+          <button type="button" class="close text-white" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <h5><i class="icon fas fa-check"></i> Success!</h5>
+          {{ session('success')}}
+          </div>
+      @endif
+
       @yield('content')
 
       <!-- /.conten -->

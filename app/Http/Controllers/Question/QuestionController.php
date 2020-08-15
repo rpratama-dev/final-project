@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Question;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Question\Question; 
-use App\Models\Question\QuestionHasTag; 
+use App\Models\Question\QuestionHasTag;  
 use App\Models\Question\Tag; 
 use Illuminate\Support\Facades\DB;
+use App\User; 
 
 class QuestionController extends Controller
 {
@@ -60,6 +62,7 @@ class QuestionController extends Controller
     public function store(Request $request)
     {
         $this->validasi($request);
+        
         //dd($request->input('tags')); //print value as array
     }
 
@@ -71,8 +74,17 @@ class QuestionController extends Controller
      */
     public function show(Question $question) 
     {
-        //dd($question);
-        return view('questions.show', ["question" => $question,])
+        // Retrieve a model by its primary key...
+        $user = User::find($question->user_id);
+        $question_comments = DB::table('question_comments') 
+            ->leftJoin('users', 'question_comments.user_id', '=', 'users.id')
+            ->selectRaw('question_comments.*, users.name')
+            ->where('question_comments.question_id','=', $question->id)
+            ->groupBy('question_comments.id')
+            ->get();
+
+        //dd($question_comments);
+        return view('questions.show', ["question" => $question, "user" => $user, 'question_comments' => $question_comments])
             ->with('page', 'Detail Question'); ;
     }
 

@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 
 //ROUTE : Resource Question (All in one)
 Route::resource('question', 'Question\QuestionController');
+//ROUTE : Resource Answer (All in one)
+Route::resource('question-comment', 'Question\QuestionCommentController');
 
 //ROUTE : Resource Answer (All in one)
 Route::resource('answer', 'Answer\AnswerController');

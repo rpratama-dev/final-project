@@ -1,6 +1,10 @@
 @extends('layouts.master')
 
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('adminlte/plugins/summernote/summernote-bs4.css') }}">
+@endpush
 @section('content')
+
 <div class="col-md-12">
     <div class="card">
       <div class="card-header p-2"> 
@@ -63,45 +67,48 @@
 				            </div>
 			              	<div class="ml-auto mr-3">
 			                	<div class="user-block float-right">
-				                    <img class="img-circle img-bordered-sm" src="{{ asset('adminlte/dist/img/user7-128x128.jpg') }}" alt="User Image">
+				                    <img class="img-circle img-bordered-sm" src="{{ asset($user->photo_dir) }}" alt="User Image">
 				                    <span class="username">
-				                      <a href="#">{{-- $question->name --}}Name</a> 
+				                      <a href="#">{{ $user->name }}</a> 
 				                    </span>
-				                    <span class="description">reputasi ({{ $question->point_reputasi }})</span>
+				                    <span class="description">reputasi ({{ $user->point_reputasi }})</span>
 				                </div> 
 			              	</div>
 				        </div>
 		                <dd class="col-sm-12 mb-0">  
 		                    <table class="table user-block">
-		                      <tr class="mt-0 p-0"> 
-		                        <td class="mt-0 p-0">
-		                          <span class="description p-0">Just change the entities() in html.php in the laravel folder, to suit your needs. Add the escaping url function there and it'l get implemented. – <a href="">itachi</a> Jan 7 '13 at 17:23</span> </td>
-		                      </tr>
-		                      <tr class="m-0 p-0"> 
-		                        <td class="m-0 p-0">
-		                          <span class="description p-0">Just change the entities() in html.php in the laravel folder, to suit your needs. Add the escaping url function there and it'l get implemented. – <a href="">itachi</a> Jan 7 '13 at 17:23</span> </td>
-		                      </tr>
+		                    	@foreach($question_comments as $comment)
+			                    <tr class="mt-0 p-0"> 
+			                        <td class="mt-0 p-0">
+			                          	<span class="description p-0">{!! $comment->comment !!}. – <a href="">{{ $comment->name }}</a> {{ $comment->created_at }}</span> </td>
+			                    </tr>
+			                    @endforeach 
 		                    </table>
 		                </dd>
 	                </td>
 	            </tr>
 	        </table> 
             <div class="hide" style="display:none" id="question_comment">
-	            <form class="form-horizontal">
-	              <div class="input-group input-group-sm mb-0" >
-	                <textarea id="ques_comment" name="ques_comment" class="hide form-control form-control-sm @error('ques_comment') is-invalid @enderror">
-	                  {{ old('ques_comment') }}
-	                </textarea>
-	                @error('answer')
-	                  <span class="text-danger" style="font-size: 12.8px;">{{ $message }}</span><br> 
-	                @enderror
-	                <div class="input-group-append">
-	                  <button type="submit" class="btn btn-danger">Send</button>
-	                </div>
-	              </div>
+	            <form class="form-horizontal" method="post" action="{{ route('question-comment.store') }}">
+	            	@csrf
+	            	<input type="hidden" name="question_id" value="{{ $question->id }}">
+		            <div class="input-group input-group-sm " >
+		                <textarea id="ques_comment" name="ques_comment" 
+		                class="form-control form-control-sm @error('ques_comment') is-invalid @enderror">{{ old('ques_comment') }}</textarea>
+		                <div class="input-group-append">
+		                  <button type="submit" class="btn btn-danger">Send</button>
+		                </div>
+		            </div> 
+		                @error('ques_comment')
+		                  <span class="text-danger mr-5 pr-3" style="font-size: 12.8px;">{{ $message }}</span><br> 
+		                   <script> 
+								var selectedobj=document.getElementById('question_comment');
+								selectedobj.style.display = "block";
+						    </script>
+		                @enderror 
 	            </form> 
 	        </div>
-            <a href="#" ><span class="link-black text-sm mr-1" onclick="showComment()"><i class="fas fa-comment mr-1"></i>Commennt(s)</span> </a>  
+            <a href="#" ><span class="link-black text-sm mr-1" onclick="showComment(event, 'question_comment')"><i class="fas fa-comment mr-1"></i>Commennt(s)</span> </a>  
         </div> 
         <!-- /.post -->   
 
@@ -117,3 +124,30 @@
         <!-- /.tab-pane -->
     </div> 
 @endsection
+
+@push('scripts')
+	<script src="{{ asset('adminlte/plugins/summernote/summernote-bs4.min.js') }}"></script> 
+	
+	<script type="text/javascript">
+ 
+        $(function () {  
+	        // Summernote
+	        $('.textarea').summernote()
+        }) 
+
+		function showComment(e, element) {
+
+    		e.preventDefault();
+			var selectedobj=document.getElementById(element);
+
+			if(selectedobj.className=='hide'){  //check if classname is hide 
+				selectedobj.style.display = "block";
+				selectedobj.readOnly=true;
+				selectedobj.className ='show';
+			}else{
+				selectedobj.style.display = "none";
+				selectedobj.className ='hide';
+			}
+		}	
+	</script>
+@endpush
