@@ -62,7 +62,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="../calendar.html" class="nav-link">
+            <a href="/users" class="nav-link">
               <i class="nav-icon far fa-user"></i>
               <p>
                 USERS

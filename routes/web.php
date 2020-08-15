@@ -37,7 +37,15 @@ Route::get('/master', function () {
     return view('layouts.master');
 });
 
+Route::get('/profil', function () {
+    return view('/profil');
+});
+
+Route::get('/users', function () {
+    return view('/users');
+});
+
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home'); 
+Route::get('/home', 'HomeController@index')->name('home');
 

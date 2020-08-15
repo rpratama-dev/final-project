@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @push('styles')
-  <!-- Tempusdominus Bbootstrap 4 --> 
+  <!-- Tempusdominus Bbootstrap 4 -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/summernote/summernote-bs4.css') }}">
@@ -9,7 +9,7 @@
 
 @section('content')
     <div class="ml-2 mt-2">
-        <form action="/pertanyaan" method="post">
+        <form action="/question" method="post">
             @csrf
             <div class="card card-primary">
                 <div class="card-header">
@@ -21,7 +21,7 @@
                         <p class="m-0"><span class="text-dark description">Be specific and imagine you’re asking a question to another person</span></p>
                         <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" placeholder="Title..." value="{{  old('title') }}">
                         @error('title')
-                            <span class="text-danger" style="font-size: 12.8px;">{{ $message }}</span><br> 
+                            <span class="text-danger" style="font-size: 12.8px;">{{ $message }}</span><br>
                         @enderror
                     </div>
                     <div class="form-group">
@@ -30,7 +30,7 @@
                         <textarea class="textarea @error('question') is-invalid @enderror" id="question" name="question" placeholder="Isi question"
                                       style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{ old('question') }}</textarea>
                         @error('question')
-                            <span class="text-danger" style="font-size: 12.8px;">{{ $message }}</span><br> 
+                            <span class="text-danger" style="font-size: 12.8px;">{{ $message }}</span><br>
                         @enderror
                     </div>
                     <div class="form-group">
@@ -48,8 +48,8 @@
                     </select>
                     </div>
                     @error('tags')
-                        <span class="text-danger" style="font-size: 12.8px;">{{ $message }}</span><br> 
-                    @enderror 
+                        <span class="text-danger" style="font-size: 12.8px;">{{ $message }}</span><br>
+                    @enderror
                 </div>
                 <div class="card-footer">
                     <button class="btn btn-primary" type="submit">Submit</button>
@@ -63,7 +63,7 @@
     <script src="{{ asset('adminlte/plugins/summernote/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('adminlte/plugins/select2/js/select2.full.min.js') }}"></script>
     <script>
-        $(function () { 
+        $(function () {
         //Initialize Select2 Elements
         $('.select2bs4').select2({
           theme: 'bootstrap4'
