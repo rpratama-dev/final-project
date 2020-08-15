@@ -45,6 +45,7 @@ class VoteQuestionController extends Controller
      */
     public function store(Request $request)
     {  
+        $user_id = $request->user_id;
 
         // If there's a flight from Oakland to San Diego, set the price to $99.
         // If no matching model exists, create one.

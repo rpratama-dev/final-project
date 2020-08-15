@@ -60,14 +60,15 @@ class VoteAnswerController extends Controller
             ['user_id' => Auth::user()->id, 'answer_id' => $answer_id],
             ['status' => $status]
         );
-
-        if ($request->status == 1) {
+        //dd($status);
+        if ($status == 1) {
             Answer::find($answer_id)->increment('votes'); 
-            if ($user_id != Auth::user()->id) {
-                User::find($user_id)->increment('point_reputasi', 10);  
+            if ($user_id != Auth::user()->id) { 
+                User::find($user_id)->increment('point_reputasi', 10); 
+                //dd($status);
             }
         }else{ 
-            Answer::find($answer_id)->decrement('votes'); 
+            Answer::find($answer_id)->decrement('votes', 1); 
             if ($user_id != Auth::user()->id) {
                 User::find($user_id)->decrement('point_reputasi', 1);  
             }

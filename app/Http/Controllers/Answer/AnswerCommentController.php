@@ -51,7 +51,8 @@ class AnswerCommentController extends Controller
             'answer_id' => $request->answer_id,  
         ]);
 
-        return redirect(route('question.show', ['question' => $request->question_id]))->with('success','Comment submited');
+        return redirect(route('question.show', ['question' => $request->question_id]))->with('success','Comment submited')
+                    ->with('alert','success');
     }
 
     /**

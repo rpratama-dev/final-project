@@ -50,7 +50,7 @@ class QuestionCommentController extends Controller
             'question_id' => $request->question_id,
 
         ]);
-        return redirect(route('question.show', ['question' => $request->question_id]))->with('success','Comment submited');
+        return redirect(route('question.show', ['question' => $request->question_id]))->with('success','Comment submited')->with('alert',"success");
     }
 
     /**

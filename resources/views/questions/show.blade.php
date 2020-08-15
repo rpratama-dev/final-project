@@ -29,15 +29,15 @@
           </button>
           <div class="btn-group">
             <button type="button" class="btn btn-sm btn-outline-primary dropdown-toggle text-dark" data-toggle="dropdown">
-              More
+              Tools
             </button>
-            <div class="dropdown-menu dropdown-menu-right" role="menu">
-              <a href="#" class="dropdown-item">Action</a>
-              <a href="#" class="dropdown-item">Another action</a>
-              <a href="#" class="dropdown-item">Something else here</a>
-              <a class="dropdown-divider"></a>
-              <a href="#" class="dropdown-item">Separated link</a>
-            </div>
+            @if ($question->user_id == Auth::user()->id) 
+	            <div class="dropdown-menu dropdown-menu-right" role="menu">
+	              <a href="{{ route('question.edit', ['question'=>$question->id ]) }}" class="dropdown-item">Edit</a>
+	              <a href="#" class="dropdown-item"><span onclick="
+	                      		event.preventDefault(); document.getElementById('delete_question').submit();">Delete</span></a> 
+	            </div>
+            @endif
           </div> 
         </div>
     </div><!-- /.card-header -->
@@ -48,13 +48,11 @@
                 <b><a href="#">{{ $question->judul }}</a> </b> 
                 <div class="float-auto">
                     <span class="text-grey">Asked : {{ $question->created_at }} </span> <b> | </b>
-					<span >Last Update : {{ $question->updated_at }}</span> <b> | </b>
-					<span><a href="{{ route('question.edit',$question->id) }}">edit</a></span>
+					<span >Last Update : {{ $question->updated_at }}</span> <b> | </b> 
 					<span>
-						<form action="{{ route('question.destroy',$question->id) }}" method="POST">
+						<form id="delete_question" action="{{ route('question.destroy',$question->id) }}" method="POST">
 							@csrf
-							@method('DELETE')
-							<button type="submit" class="btn btn-danger">Delete</button>
+							@method('DELETE') 
 						</form>
 					</span>
                 </div>

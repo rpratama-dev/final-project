@@ -31,6 +31,7 @@ class QuestionController extends Controller
             ->leftJoin('answers', 'questions.id', '=', 'answers.question_id')
             ->leftJoin('users', 'questions.user_id', '=', 'users.id')
             ->selectRaw('questions.*, users.name, users.photo_dir, users.point_reputasi, count(answers.question_id) as answer_count')
+            ->orderBy('questions.id', 'desc')
             ->groupBy('questions.id')
             ->get();   
         /* 
@@ -61,8 +62,19 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validasi($request);
         
+        $this->validasi($request);
+
+        Question::create([
+            'judul' => $request->title,
+            'isi' => $request->question,
+            'tag' => implode(",", $request->tags), 
+            'user_id' => Auth::user()->id, 
+        ]);
+ 
+        return redirect(route('question.index'))
+                    ->with('success','Comment submited')->with('alert',"success"); 
+        /*
         $tag = $request['tags'];
         foreach ($tag as $t) {
             $query = DB::table('tags') -> insert([
@@ -81,9 +93,8 @@ class QuestionController extends Controller
             'updated_at' => $ldate = date('Y-m-d H:i:s'),
             'user_id' => $user->id,
         ]);
-        
-        
-        return redirect()->route('question.index');
+       */ 
+         
 
     }
 

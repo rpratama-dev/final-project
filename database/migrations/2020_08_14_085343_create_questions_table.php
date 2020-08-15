@@ -18,10 +18,10 @@ class CreateQuestionsTable extends Migration
             $table->string('judul', 255);
             $table->longText('isi');
             $table->string('tag', 255); 
-            $table->integer('votes')->default('0')->unsigned()->nullable(); 
+            $table->integer('votes')->default('0')->nullable(); 
             $table->timestamps();
             $table->integer('user_id')->unsigned();
-            $table->integer('jawaban_terbaik_id')->default('0')->unsigned()->nullable();
+            $table->integer('jawaban_terbaik_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->nullable()->constrained()->onDelete('cascade'); 
 
          });

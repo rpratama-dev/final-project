@@ -16,8 +16,8 @@ class CreateAnswersTable extends Migration
         Schema::create('answers', function (Blueprint $table) {
             $table->increments('id');
             $table->longText('answer');
-            $table->integer('votes')->default('0')->unsigned()->nullable(); 
-            $table->boolean('is_best_answer')->default('0')->unsigned();
+            $table->integer('votes')->default('0')->nullable(); 
+            $table->boolean('is_best_answer')->unsigned();
             $table->timestamps();
             $table->integer('user_id')->unsigned();
             $table->integer('question_id')->unsigned();

@@ -102,7 +102,7 @@ class AnswerController extends Controller
 
         User::find($user_id)->increment('point_reputasi', 15);    
 
-        return redirect(route('question.show', ['question' => $answer_id]))
+        return redirect(route('question.show', ['question' => $question_id]))
                     ->with('success','Best answer selected.')
                     ->with('alert','success'); 
     }

@@ -13,7 +13,7 @@
 
       <form method="POST" action="{{ route('login') }}">
         @csrf 
-
+        <input type="hidden" name="photo_dir" value="images/riyan.jpg"> 
         <div class="input-group mb-3">
           <input id="email" type="email" name="email" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror" placeholder="Email" required autocomplete="email" autofocus>
           <div class="input-group-append">

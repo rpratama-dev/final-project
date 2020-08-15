@@ -13,13 +13,15 @@
                   <a href="{{ route('vote-answer.store') }}"><span class="link-black col-md-12 text-xl mr-1" title="This question does not show any research effort; it is unclear or not useful"><i class="fas fa-caret-down mr-1"onclick="
                       event.preventDefault(); document.getElementById('answer_downvote{{ $answer->id }}').submit();"></i></span></a>
                 </div> 
-                @if ($question->jawaban_terbaik_id < 1)
-                <a href="{{ route('answer.update', ['answer' => $answer->id]) }}">
-                  <span class="text-xl col-md-12 mr-2 text-secondary" onclick="
-                      event.preventDefault(); document.getElementById('best_answer{{ $answer->id }}').submit();"> 
-                      <i class="fas fa-check mr-1"></i> 
-                  </span>
-                </a> 
+                @if ($question->jawaban_terbaik_id < 1) 
+                  @if ($question->user_id == Auth::user()->id) 
+                    <a href="{{ route('answer.update', ['answer' => $answer->id]) }}">
+                      <span class="text-xl col-md-12 mr-2 text-secondary" onclick="
+                          event.preventDefault(); document.getElementById('best_answer{{ $answer->id }}').submit();"> 
+                          <i class="fas fa-check mr-1"></i> 
+                      </span>
+                    </a> 
+                  @endif
                 @else
                   @if($answer->is_best_answer > 0)
                     <span class="text-xl col-md-12 mr-2 text-success"> 
