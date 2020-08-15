@@ -61,9 +61,20 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validasi($request);
+        //$this->validasi($request);
         
-        //dd($request->input('tags')); //print value as array
+        //dd($request); //print value as array
+        $query = DB::table('questions') -> insert([
+            'judul' => $request['title'], 
+            'isi' => $request['question'],
+            'tag' => $request['tags'][0],
+            'created_at' => $ldate = date('Y-m-d H:i:s'),
+            'updated_at' => $ldate = date('Y-m-d H:i:s'),
+            'user_id' => 1,
+        ]);
+
+        return redirect()->route('question.index');
+
     }
 
     /**
@@ -122,9 +133,11 @@ class QuestionController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function edit(Question $question)
+    public function edit($question)
     {
-        //
+        $question = DB::table('questions')->where('id', $question)->first();
+
+        return view('questions.edit', compact('question'));
     }
 
     /**
@@ -134,9 +147,17 @@ class QuestionController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $question)
+    public function update($question, Request $request)
     {
-        //
+        $query = DB::table('questions') 
+        -> where('id', $question)
+        -> update([
+            'judul' => $request['title'], 
+            'isi' => $request['question'],
+            'updated_at' => $ldate = date('Y-m-d H:i:s'),
+        ]);
+
+        return redirect()->route('question.index');
     }
 
     /**
