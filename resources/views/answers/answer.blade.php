@@ -1,4 +1,6 @@
 @foreach($answers as $answer)
+
+
 <div class="post clearfix">   
     <table class="table border-0 p-0 m-0" style="border:0">
         <tr class=""> 
@@ -38,33 +40,42 @@
                 </div>
               </div>
               <dd class="col-sm-12 mb-0">  
-                  <table class="table user-block">
+                  <table class="table user-block"> 
+                     @php 
+                      //$answer_comments = app(App\Http\Controllers\Answer\AnswerCommentController::class)->getCommentAnswer($answer->id);  
+                     @endphp
+
+                     @foreach(app(App\Http\Controllers\Answer\AnswerCommentController::class)->getCommentAnswer($answer->id) as $answer_coment)
                     <tr class="mt-0 p-0"> 
                       <td class="mt-0 p-0">
-                        <span class="description p-0">Just change the entities() in html.php in the laravel folder, to suit your needs. Add the escaping url function there and it'l get implemented. – <a href="">itachi</a> Jan 7 '13 at 17:23</span> </td>
+                        <span class="description p-0">{{ $answer_coment->comment }} – <a href="">{{ $answer_coment->name }}</a> {{ $answer_coment->created_at }}</span> </td>
                     </tr>
-                    <tr class="m-0 p-0"> 
-                      <td class="m-0 p-0">
-                        <span class="description p-0">Just change the entities() in html.php in the laravel folder, to suit your needs. Add the escaping url function there and it'l get implemented. – <a href="">itachi</a> Jan 7 '13 at 17:23</span> </td>
-                    </tr>
+                    @endforeach 
                   </table>
               </dd>
           </td>
       </tr>
   </table> 
-  <div class="hide" style="display:none" id="{{ $answer->id }}">
-      <form class="form-horizontal">
+  <div class="hide" style="display:none" id="answer{{ $answer->id }}">
+      <form class="form-horizontal" method="post" action="{{ route('answer-comment.store') }}">
+          @csrf
+          <input type="hidden" name="question_id" value="{{ $question->id }}">
+          <input type="hidden" name="answer_id" value="{{ $answer->id }}">
           <div class="input-group input-group-sm mb-0" >
               <textarea id="answ_comment" name="answ_comment" class="hide form-control form-control-sm @error('answ_comment') is-invalid @enderror">{{ old('answ_comment') }}</textarea>
-              @error('answ_comment')
-                  <span class="text-danger" style="font-size: 12.8px;">{{ $message }}</span><br> 
-              @enderror
               <div class="input-group-append">
                   <button type="submit" class="btn btn-danger">Send</button>
               </div>
-          </div>
+        </div>
+        @error('answ_comment')
+            <span class="text-danger" style="font-size: 12.8px;">{{ $message }}</span><br>  
+            <script> 
+              var selectedobj=document.getElementById('answer{{ $answer->id }}');
+              selectedobj.style.display = "block";
+            </script>
+        @enderror
       </form> 
   </div>
-  <a href="#" ><span class="link-black text-sm mr-1" onclick="showComment(event, '{{ $answer->id }}')"><i class="fas fa-comment mr-1"></i>Commennt(s)</span> </a>  
+  <a href="#" ><span class="link-black text-sm mr-1" onclick="showComment(event, 'answer{{ $answer->id }}')"><i class="fas fa-comment mr-1"></i>Commennt(s)</span> </a>  
 </div>
 @endforeach

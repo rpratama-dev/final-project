@@ -82,8 +82,8 @@ class QuestionController extends Controller
             ->selectRaw('question_comments.*, users.name')
             ->where('question_comments.question_id','=', $question->id)
             ->groupBy('question_comments.id')
-            ->get(); 
-
+            ->get();  
+            
         // get best answer where jawaban_terbaik_id
         $answers = DB::table('answers') 
             ->leftJoin('users', 'answers.user_id', '=', 'users.id')
@@ -93,8 +93,7 @@ class QuestionController extends Controller
             ->get();
     
         
-        //dd($answers);
-
+        //dd($answers); 
         $best_answer = array();
         // get best answer where question_id
         if (!empty($question->jawaban_terbaik_id)) {

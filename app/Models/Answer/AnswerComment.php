@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class AnswerComment extends Model
 {
-    protected $fillable = ['answer','user_id', 'question_id'];
+    protected $fillable = ['comment','user_id', 'answer_id'];
 }
