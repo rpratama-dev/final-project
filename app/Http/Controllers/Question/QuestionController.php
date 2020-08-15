@@ -63,7 +63,28 @@ class QuestionController extends Controller
     {
         $this->validasi($request);
         
-        //dd($request->input('tags')); //print value as array
+        $tag = $request['tags'];
+        foreach ($tag as $t) {
+            $query = DB::table('tags') -> insert([
+                'tag_name' => $t
+            ]);
+        }
+
+        //dd($request); //print value as array
+
+        $user = auth()->user();
+        $query = DB::table('questions') -> insert([
+            'judul' => $request['title'], 
+            'isi' => $request['question'],
+            'tag' => $request['tags'][0],
+            'created_at' => $ldate = date('Y-m-d H:i:s'),
+            'updated_at' => $ldate = date('Y-m-d H:i:s'),
+            'user_id' => $user->id,
+        ]);
+        
+        
+        return redirect()->route('question.index');
+
     }
 
     /**
@@ -112,9 +133,11 @@ class QuestionController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function edit(Question $question)
+    public function edit($question)
     {
-        //
+        $question = DB::table('questions')->where('id', $question)->first();
+
+        return view('questions.edit', compact('question'));
     }
 
     /**
@@ -124,9 +147,18 @@ class QuestionController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $question)
+    public function update($question, Request $request)
     {
-        //
+        $this->validasi($request);
+        $query = DB::table('questions') 
+        -> where('id', $question)
+        -> update([
+            'judul' => $request['title'], 
+            'isi' => $request['question'],
+            'updated_at' => $ldate = date('Y-m-d H:i:s'),
+        ]);
+
+        return redirect()->route('question.index');
     }
 
     /**
@@ -135,9 +167,13 @@ class QuestionController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Question $question)
+    public function destroy($question)
     {
-        //
+        $query = DB::table('questions') 
+        -> where('id', $question) 
+        -> delete();
+
+        return redirect()->route('question.index');
     }
 
     // Function Validasi

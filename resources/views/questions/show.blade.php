@@ -48,7 +48,15 @@
                 <b><a href="#">{{ $question->judul }}</a> </b> 
                 <div class="float-auto">
                     <span class="text-grey">Asked : {{ $question->created_at }} </span> <b> | </b>
-                    <span >Last Update : {{ $question->updated_at }}</span> 
+					<span >Last Update : {{ $question->updated_at }}</span> <b> | </b>
+					<span><a href="{{ route('question.edit',$question->id) }}">edit</a></span>
+					<span>
+						<form action="{{ route('question.destroy',$question->id) }}" method="POST">
+							@csrf
+							@method('DELETE')
+							<button type="submit" class="btn btn-danger">Delete</button>
+						</form>
+					</span>
                 </div>
                 <hr class="mb-0 mt-2 pb-0">
             </div>
