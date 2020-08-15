@@ -59,7 +59,8 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validasi($request);
+        //dd($request->input('tags')); //print value as array
     }
 
     /**
@@ -107,5 +108,21 @@ class QuestionController extends Controller
     public function destroy(Question $question)
     {
         //
+    }
+
+    // Function Validasi
+    private function validasi($request){
+        $rules = [
+            'title' => 'required|max:255',
+            'question' => 'required',
+            'tags' => 'required',
+        ];
+
+        $customMessages = [
+            'required' => 'The :attribute field is required.',
+            'max' => 'The :attribute field is max: 255 char'
+        ];
+
+        $request->validate($rules, $customMessages);
     }
 }

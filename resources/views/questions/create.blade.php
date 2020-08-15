@@ -9,7 +9,7 @@
 
 @section('content')
     <div class="ml-2 mt-2">
-        <form action="/pertanyaan" method="post">
+        <form action="{{ route('question.store') }}" method="post">
             @csrf
             <div class="card card-primary">
                 <div class="card-header">
@@ -36,7 +36,7 @@
                     <div class="form-group">
                       <label class="mb-0">Tags</label>
                       <p class="m-0"><span class="text-dark description">Add tags to describe what your question is about</span></p>
-                      <select id="tags" name="tags" class="select2bs4 @error('tags') is-invalid @enderror" multiple="multiple" data-placeholder="Select a State"
+                      <select id="tags" name="tags[]" class="select2bs4 @error('tags') is-invalid @enderror" multiple="multiple" data-placeholder="Select a State"
                           style="width: 100%;">
                         <option>Laravel</option>
                         <option>PHP</option>
