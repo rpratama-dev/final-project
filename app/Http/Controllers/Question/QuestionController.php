@@ -166,9 +166,13 @@ class QuestionController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Question $question)
+    public function destroy($question)
     {
-        //
+        $query = DB::table('questions') 
+        -> where('id', $question) 
+        -> delete();
+
+        return redirect()->route('question.index');
     }
 
     // Function Validasi
