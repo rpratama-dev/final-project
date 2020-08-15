@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Answer;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Model\Answer\Answer; 
+use App\Http\Controllers\Controller; 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Answer\Answer; 
+use Illuminate\Http\Request; 
+use App\User;  
 
 class AnswerController extends Controller
 {
@@ -35,8 +38,16 @@ class AnswerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    { 
+        $this->validasi($request);
+
+        Answer::create([
+            'answer' => $request->answer,
+            'user_id' => Auth::user()->id,
+            'question_id' => $request->question_id,
+        ]);
+
+        return redirect(route('question.show', ['question' => $request->question_id]))->with('success','Your answer submited');
     }
 
     /**
@@ -82,5 +93,19 @@ class AnswerController extends Controller
     public function destroy(Answer $answer)
     {
         //
+    }
+
+
+    // Function Validasi
+    private function validasi($request){
+        $rules = [
+            'answer' => 'required', 
+        ];
+
+        $customMessages = [
+            'required' => 'The :attribute field is required.', 
+        ];
+
+        $request->validate($rules, $customMessages);
     }
 }

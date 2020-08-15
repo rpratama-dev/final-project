@@ -1,3 +1,4 @@
+@foreach($answers as $answer)
 <div class="post clearfix">   
     <table class="table border-0 p-0 m-0" style="border:0">
         <tr class=""> 
@@ -12,23 +13,27 @@
                 </div>    
             </td> 
             <td style="border:0">
-              {!! $question->isi !!}
+
+              {!! $answer->answer !!}
+
               <div class="row ml-1">
                 <div>
                     <div class="float-left">
+                      {{--  
                         @foreach (explode (",", $question->tag) as $key => $value)
                             {{ $loop->first ? '' : '' }} 
                         <button type="button" class="btn btn-warning btn-xs">{{ $value }}</button>  
                         @endforeach
+                        --}}
                     </div> 
                 </div>
-                <div class="ml-auto mr-3">
+                <div class="ml-auto mr-3 mt-2">
                     <div class="user-block float-right">
-                        <img class="img-circle img-bordered-sm" src="{{ asset('adminlte/dist/img/user7-128x128.jpg') }}" alt="User Image">
+                        <img class="img-circle img-bordered-sm" src="{{ asset($answer->photo_dir) }}" alt="User Image">
                         <span class="username">
-                          <a href="#">{{-- $question->name --}}Name</a> 
+                          <a href="#">{{ $answer->name }}</a> 
                         </span>
-                        <span class="description">reputasi ({{ $question->point_reputasi }})</span>
+                        <span class="description">reputasi ({{ $answer->point_reputasi }})</span>
                     </div> 
                 </div>
               </div>
@@ -47,11 +52,11 @@
           </td>
       </tr>
   </table> 
-  <div class="hide" style="display:none" id="question_comment">
+  <div class="hide" style="display:none" id="{{ $answer->id }}">
       <form class="form-horizontal">
           <div class="input-group input-group-sm mb-0" >
-              <textarea id="ques_comment" name="ques_comment" class="hide form-control form-control-sm @error('ques_comment') is-invalid @enderror">{{ old('ques_comment') }}</textarea>
-              @error('answer')
+              <textarea id="answ_comment" name="answ_comment" class="hide form-control form-control-sm @error('answ_comment') is-invalid @enderror">{{ old('answ_comment') }}</textarea>
+              @error('answ_comment')
                   <span class="text-danger" style="font-size: 12.8px;">{{ $message }}</span><br> 
               @enderror
               <div class="input-group-append">
@@ -60,5 +65,6 @@
           </div>
       </form> 
   </div>
-  <a href="#" ><span class="link-black text-sm mr-1" onclick="showComment()"><i class="fas fa-comment mr-1"></i>Commennt(s)</span> </a>  
+  <a href="#" ><span class="link-black text-sm mr-1" onclick="showComment(event, '{{ $answer->id }}')"><i class="fas fa-comment mr-1"></i>Commennt(s)</span> </a>  
 </div>
+@endforeach

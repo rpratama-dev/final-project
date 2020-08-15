@@ -76,16 +76,45 @@ class QuestionController extends Controller
     {
         // Retrieve a model by its primary key...
         $user = User::find($question->user_id);
+        // get question_comment
         $question_comments = DB::table('question_comments') 
             ->leftJoin('users', 'question_comments.user_id', '=', 'users.id')
             ->selectRaw('question_comments.*, users.name')
             ->where('question_comments.question_id','=', $question->id)
             ->groupBy('question_comments.id')
+            ->get(); 
+
+        // get best answer where jawaban_terbaik_id
+        $answers = DB::table('answers') 
+            ->leftJoin('users', 'answers.user_id', '=', 'users.id')
+            ->selectRaw('answers.*, users.name, users.name, users.photo_dir, users.point_reputasi')
+            ->where('answers.question_id','=', $question->id)
+            ->groupBy('answers.id')
             ->get();
+    
+        
+        //dd($answers);
+
+        $best_answer = array();
+        // get best answer where question_id
+        if (!empty($question->jawaban_terbaik_id)) {
+        $best_answer = DB::table('answers') 
+            ->leftJoin('users', 'answers.user_id', '=', 'users.id')
+            ->selectRaw('answers.*, users.name, users.name, users.photo_dir, users.point_reputasi')
+            ->where('answers.id','=', $question->jawaban_terbaik_id)
+            ->groupBy('answers.id')
+            ->get();
+        }
+         
 
         //dd($question_comments);
-        return view('questions.show', ["question" => $question, "user" => $user, 'question_comments' => $question_comments])
-            ->with('page', 'Detail Question'); ;
+        return view('questions.show', [
+            "question" => $question, "user" => $user, 
+            'question_comments' => $question_comments,
+            'answers' => $answers,
+            'answer' => $best_answer,
+        ])
+            ->with('page', 'Detail Question');
     }
 
     /**
