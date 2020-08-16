@@ -37,7 +37,7 @@ class QuestionController extends Controller
             ->groupBy('questions.id')
             ->get();   
         } catch (Throwable $e) {
-            report($e);
+            //report($e);
 
             return false;
         }
