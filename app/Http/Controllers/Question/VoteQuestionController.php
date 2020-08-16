@@ -46,7 +46,7 @@ class VoteQuestionController extends Controller
     public function store(Request $request)
     {  
         $user_id = $request->user_id;
-
+        $min_reptutation = 15;
         // If there's a flight from Oakland to San Diego, set the price to $99.
         // If no matching model exists, create one.
         $vote = VoteQuestion::where('user_id', '=',  Auth::user()->id)
@@ -55,12 +55,8 @@ class VoteQuestionController extends Controller
 
         if (count($vote) > 0){
             return redirect(route('question.show', ['question' => $request->question_id]))->with('success','hanya bisa vote satu kali')->with('alert', "warning");
-        }
-
-        $vote = VoteQuestion::updateOrCreate(
-            ['user_id' => Auth::user()->id, 'question_id' => $request->question_id],
-            ['status' => $request->status]
-        );
+        } 
+        //dd();
 
         if ($request->status == 1) {
             Question::find($request->question_id)->increment('votes'); 
@@ -68,11 +64,20 @@ class VoteQuestionController extends Controller
                 User::find($user_id)->increment('point_reputasi', 10);  
             }
         }else{ 
+            if (Auth::user()->point_reputasi < $min_reptutation) {
+                return redirect(route('question.show', ['question' => $request->question_id]))
+                        ->with('success','Tidak bisa downvote, Point Reputasi kurang dari 15')->with('alert','warning');
+            }
             Question::find($request->question_id)->decrement('votes'); 
             if ($user_id != Auth::user()->id) {
                 User::find($user_id)->decrement('point_reputasi', 1);  
             }
         }
+
+        $vote = VoteQuestion::updateOrCreate(
+            ['user_id' => Auth::user()->id, 'question_id' => $request->question_id],
+            ['status' => $request->status]
+        );
 
         return redirect(route('question.show', ['question' => $request->question_id]))
             ->with('success','Vote updated')->with('alert','success');

@@ -185,6 +185,13 @@ class QuestionController extends Controller
         -> delete();
 
         return redirect()->route('question.index');
+    } 
+
+    public function getTotalQuestionByUser()
+    {
+        $question = Question::where('user_id', '=',  Auth::user()->id) 
+                    ->get();
+        return count($question);
     }
 
     // Function Validasi

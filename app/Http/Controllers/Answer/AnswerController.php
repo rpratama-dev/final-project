@@ -119,6 +119,14 @@ class AnswerController extends Controller
     }
 
 
+    public function getTotalAnswerByUser()
+    {
+        $answer = Answer::where('user_id', '=',  Auth::user()->id) 
+                    ->get();
+        return count($answer);
+    }
+
+
     // Function Validasi
     private function validasi($request){
         $rules = [

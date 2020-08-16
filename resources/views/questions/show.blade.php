@@ -31,12 +31,14 @@
             <button type="button" class="btn btn-sm btn-outline-primary dropdown-toggle text-dark" data-toggle="dropdown">
               Tools
             </button>
-            @if ($question->user_id == Auth::user()->id) 
-	            <div class="dropdown-menu dropdown-menu-right" role="menu">
-	              <a href="{{ route('question.edit', ['question'=>$question->id ]) }}" class="dropdown-item">Edit</a>
-	              <a href="#" class="dropdown-item"><span onclick="
-	                      		event.preventDefault(); document.getElementById('delete_question').submit();">Delete</span></a> 
-	            </div>
+            @if(Auth::check())
+	            @if ($question->user_id == Auth::user()->id) 
+		            <div class="dropdown-menu dropdown-menu-right" role="menu">
+		              <a href="{{ route('question.edit', ['question'=>$question->id ]) }}" class="dropdown-item">Edit</a>
+		              <a href="#" class="dropdown-item"><span onclick="
+		                      		event.preventDefault(); document.getElementById('delete_question').submit();">Delete</span></a> 
+		            </div>
+	            @endif
             @endif
           </div> 
         </div>
@@ -151,8 +153,13 @@
         <!-- section answer --> 
         @include('answers.answer')
 
+        @if(Auth::check())
+	        @if ($question->id != Auth::user()->id)
+	        	{{-- expr --}}
+	        	@include('answers.post_answer')
+	        @endif
+	    @endif
         <!-- section post answer --> 
-        @include('answers.post_answer')
       </div>
         <!-- /.tab-pane -->
     </div> 
