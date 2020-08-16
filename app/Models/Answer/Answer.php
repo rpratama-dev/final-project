@@ -8,8 +8,11 @@ class Answer extends Model
 {
     protected $fillable = ['answer','user_id', 'question_id'];
 
+    /**
+     * Get the question that post.
+     */
     public function question()
-	{
-	    //return $this->belongsTo('App\Models\Question\Question', 'jawaban_terbaik');
-	}
+    {
+        return $this->belongsTo('App\Models\Question\Question');
+    }
 }

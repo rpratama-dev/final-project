@@ -31,7 +31,8 @@
     </div><!-- /.card-header -->
     <div class="card-body"> 
         <!-- Post -->
-        @foreach($questions as $question)
+         {{-- @foreach($questions as $question) --}}
+        @foreach($questions as $key => $question)
         <div class="post clearfix">
             <div class="user-block"> 
                 <b><a href="{{ route('question.show', ['question' => $question->id]) }}">{{ $question->judul }}</a> </b> 
@@ -55,18 +56,18 @@
               </div>
               <div class="ml-auto mr-3">
                 <div class="user-block float-right">
-                    <img class="img-circle img-bordered-sm" src="{{ asset($question->photo_dir) }}" alt="User Image">
+                    <img class="img-circle img-bordered-sm" src="{{ asset($question->user->photo_dir) }}" alt="User Image">
                     <span class="username">
-                      <a href="#">{{ $question->name }}</a> 
+                      <a href="#">{{ $question->user->name }}</a> 
                     </span>
-                    <span class="description">reputasi ({{ $question->point_reputasi }})</span>
+                    <span class="description">reputasi ({{ $question->user->point_reputasi }})</span>
                 </div> 
               </div>
             </div>  
             <p class="mb-0">
                 <span class="link-black text-sm mr-2"><i class="fas fa-caret-square-up mr-1"></i>{{ $question->votes }} Vote</span> 
                   <span class="link-black text-sm">
-                    <i class="far fa-comments mr-1"></i> Answer ({{ $question->answer_count }})
+                    <i class="far fa-comments mr-1"></i> Answer ({{ count($question->answer) }})
                   </span>
                 <span class="float-right">
                 </span>

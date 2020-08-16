@@ -9,12 +9,18 @@ class Question extends Model
 	protected $fillable = ['judul','isi', 'tag', 'user_id'];
 
 	/**
-     * Get the best answer record associated with the question.
+     * Get the user that owns the post.
      */
-    public function getx()
+    public function user()
     {
-    	//return $this->hasOne('App\Models\Answer\Answer');
-    	//return $this->belongsTo('App\Models\Answer\Answer', 'id')->where('jawaban_terbaik_id', 1)->first();
-        //return $this->hasOne('App\Models\Answer\Answer');
+        return $this->belongsTo('App\User');
+    }
+
+    /**
+     * Get the answer for the question.
+     */
+    public function answer()
+    {
+        return $this->hasMany('App\Models\Answer\Answer');
     }
 }

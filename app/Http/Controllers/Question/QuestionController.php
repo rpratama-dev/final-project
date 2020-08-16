@@ -26,32 +26,13 @@ class QuestionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //$question = Question::find(1)->bestAnswer;
-        //dd($question);
+    { 
+        /**
+        * Get the all of question.
+        */
+        $questions = Question::all()->sortByDesc('id'); 
 
-        try {
-        // Validate the value...
-        // $questions = Question::all()->sortByDesc("id");
-        $questions = DB::table('questions')
-            ->leftJoin('answers', 'questions.id', '=', 'answers.question_id')
-            ->leftJoin('users', 'questions.user_id', '=', 'users.id')
-            ->selectRaw('questions.*, users.name, users.photo_dir, users.point_reputasi, count(answers.question_id) as answer_count')
-            ->orderBy('questions.id', 'desc') 
-            ->get();   
-        } catch (Throwable $e) {
-            //report($e);
-
-            return false;
-        }
-        
-        /* 
-        $questions = DB::table('questions')
-            ->select(DB::raw('questions.*, count(answers.question_id) as answer_count'))
-            ->join('answers', 'questions.id', '=', 'answers.question_id') 
-            ->get();*/
-
-        return view('questions.index', ['questions' => $questions])
+        return view('questions.index', compact('questions'))
             ->with('page', 'Top Question'); 
     }
 
