@@ -30,10 +30,14 @@ $ composer install
 ```bash
 $ php artisan key:generate
 ```
-
 * Tambahan: Untuk pengerjaan di laptop/PC masing-masing, sesuaikan nama database, username dan password nya di file .env dengan database kalian. 
 
-Setelah itu kalian sudah bisa lanjut mengerjakan soal berikutnya. jangan lupa untuk menjalankan server laravel
+* jalankan perintah php artisan migrate
+```bash
+$ php artisan migrate
+```
+
+Setelah itu kalian sudah bisa lanjut mengerjakan feature berikutnya. jangan lupa untuk menjalankan server laravel
 ```bash
 $ php artisan serve
 ```
