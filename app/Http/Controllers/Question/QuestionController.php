@@ -37,8 +37,7 @@ class QuestionController extends Controller
             ->leftJoin('answers', 'questions.id', '=', 'answers.question_id')
             ->leftJoin('users', 'questions.user_id', '=', 'users.id')
             ->selectRaw('questions.*, users.name, users.photo_dir, users.point_reputasi, count(answers.question_id) as answer_count')
-            ->orderBy('questions.id', 'desc')
-            ->groupBy('questions.id')
+            ->orderBy('questions.id', 'desc') 
             ->get();   
         } catch (Throwable $e) {
             //report($e);
