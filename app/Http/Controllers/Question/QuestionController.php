@@ -26,7 +26,9 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        //$questions = Question::all()->sortByDesc("id");
+        try {
+        // Validate the value...
+        // $questions = Question::all()->sortByDesc("id");
         $questions = DB::table('questions')
             ->leftJoin('answers', 'questions.id', '=', 'answers.question_id')
             ->leftJoin('users', 'questions.user_id', '=', 'users.id')
@@ -34,6 +36,12 @@ class QuestionController extends Controller
             ->orderBy('questions.id', 'desc')
             ->groupBy('questions.id')
             ->get();   
+        } catch (Throwable $e) {
+            report($e);
+
+            return false;
+        }
+        
         /* 
         $questions = DB::table('questions')
             ->select(DB::raw('questions.*, count(answers.question_id) as answer_count'))
