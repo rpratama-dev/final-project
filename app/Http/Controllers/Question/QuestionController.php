@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Question\Question; 
 use App\Models\Question\QuestionHasTag;  
 use App\Models\Question\Tag; 
+use App\Models\Answer\Answer; 
 use Illuminate\Support\Facades\DB;
 use App\User; 
 
@@ -26,6 +27,9 @@ class QuestionController extends Controller
      */
     public function index()
     {
+        //$question = Question::find(1)->bestAnswer;
+        //dd($question);
+
         try {
         // Validate the value...
         // $questions = Question::all()->sortByDesc("id");

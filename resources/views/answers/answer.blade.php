@@ -14,13 +14,15 @@
                       event.preventDefault(); document.getElementById('answer_downvote{{ $answer->id }}').submit();"></i></span></a>
                 </div> 
                 @if ($question->jawaban_terbaik_id < 1) 
-                  @if ($question->user_id == Auth::user()->id) 
-                    <a href="{{ route('answer.update', ['answer' => $answer->id]) }}">
-                      <span class="text-xl col-md-12 mr-2 text-secondary" onclick="
-                          event.preventDefault(); document.getElementById('best_answer{{ $answer->id }}').submit();"> 
-                          <i class="fas fa-check mr-1"></i> 
-                      </span>
-                    </a> 
+                  @if(Auth::check())
+                    @if ($question->user_id == Auth::user()->id) 
+                      <a href="{{ route('answer.update', ['answer' => $answer->id]) }}">
+                        <span class="text-xl col-md-12 mr-2 text-secondary" onclick="
+                            event.preventDefault(); document.getElementById('best_answer{{ $answer->id }}').submit();"> 
+                            <i class="fas fa-check mr-1"></i> 
+                        </span>
+                      </a> 
+                    @endif
                   @endif
                 @else
                   @if($answer->is_best_answer > 0)
