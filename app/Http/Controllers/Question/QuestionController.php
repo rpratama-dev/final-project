@@ -43,7 +43,8 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        return view('questions.create');
+        $tags = Tag::All();
+        return view('questions.create', compact('tags'));
     }
 
     /**
@@ -53,41 +54,23 @@ class QuestionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        
+    { 
         $this->validasi($request);
+        $tags = $request->tags; 
 
-        Question::create([
+        $affect = Question::create([
             'judul' => $request->title,
             'isi' => $request->question,
-            'tag' => implode(",", $request->tags), 
+            'tag' => implode(",", $tags), 
             'user_id' => Auth::user()->id, 
         ]);
  
+        foreach ($tags as $key => $tag) {
+            $affect->tags()->attach($tag);
+        } 
+
         return redirect(route('question.index'))
                     ->with('success','Comment submited')->with('alert',"success"); 
-        /*
-        $tag = $request['tags'];
-        foreach ($tag as $t) {
-            $query = DB::table('tags') -> insert([
-                'tag_name' => $t
-            ]);
-        }
-
-        //dd($request); //print value as array
-
-        $user = auth()->user();
-        $query = DB::table('questions') -> insert([
-            'judul' => $request['title'], 
-            'isi' => $request['question'],
-            'tag' => $request['tags'][0],
-            'created_at' => $ldate = date('Y-m-d H:i:s'),
-            'updated_at' => $ldate = date('Y-m-d H:i:s'),
-            'user_id' => $user->id,
-        ]);
-       */ 
-         
-
     }
 
     /**
@@ -98,6 +81,9 @@ class QuestionController extends Controller
      */
     public function show(Question $question) 
     {
+        return view('questions.show', compact('question'));
+        //$answers = Answer::where('question_id', $question->id)->orderBy('is_best_answer', 'desc')->get();
+        //dd($answers);
         // Retrieve a model by its primary key...
         $user = User::find($question->user_id);
         // get question_comment
@@ -140,7 +126,7 @@ class QuestionController extends Controller
     {
         $question = DB::table('questions')->where('id', $question)->first();
 
-        return view('questions.edit', compact('question'));
+        return view('questions.edit', compact('question'))->with('edit','Edit Your Question');
     }
 
     /**
@@ -184,6 +170,28 @@ class QuestionController extends Controller
         $question = Question::where('user_id', '=',  Auth::user()->id) 
                     ->get();
         return count($question);
+    }
+
+    // Function get question by user id
+    public function user_question($user_id)
+    {
+        $user = User::find($user_id); 
+        $questions = $user->question()->orderBy('id', 'asc')->get();
+
+        return view('questions.index', compact('questions'))
+            ->with('page', 'Question by '. $user->name); 
+    }
+
+    // Function get question by tag
+    public function tag_question($tag_id)
+    {
+        /**
+        $tag = Question::find($tag_id); 
+        $questions = $tag->questions()->orderBy('id', 'asc')->get();
+
+        return view('questions.index', compact('questions'))
+            ->with('page', 'Question by Tag : '. $tag->tag_name); 
+        */
     }
 
     // Function Validasi

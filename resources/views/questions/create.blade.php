@@ -13,7 +13,7 @@
             @csrf
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Create Question</h3>
+                    <h3 class="card-title">Create Question </h3>
                 </div>
                 <div class="card-body">
                     <div class="form-group">
@@ -38,13 +38,11 @@
                       <p class="m-0"><span class="text-dark description">Add tags to describe what your question is about</span></p>
                       <select id="tags" name="tags[]" class="select2bs4 @error('tags') is-invalid @enderror" multiple="multiple" data-placeholder="Select a State"
                           style="width: 100%;">
-                        <option>Laravel</option>
-                        <option>PHP</option>
-                        <option>CSS</option>
-                        <option>HTML</option>
-                        <option>C++</option>
-                        <option>MySql</option>
-                        <option>MariaDB</option>
+                        @if (count($tags) > 0) 
+                            @foreach($tags as $tag)
+                                <option value="{{ $tag->id }}">{{ $tag->tag_name }}</option>
+                            @endforeach  
+                        @endif
                     </select>
                     @error('tags')
                         <span class="text-danger" style="font-size: 12.8px;">{{ $message }}</span><br> 

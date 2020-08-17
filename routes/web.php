@@ -52,9 +52,13 @@ Route::get('/profil', function () {
 Route::get('/users', function () {
     return view('users');
 });
-
-
+   
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::post('/tag', 'Question\TagController@store')->name('tag.store');
+
+Route::get('/question/{user_id}/user-question', 'Question\QuestionController@user_question')->name('question.user-post');
+Route::get('/question/{tag_id}/tag-question', 'Question\QuestionController@tag_question')->name('question.tag-post');
 

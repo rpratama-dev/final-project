@@ -22,7 +22,8 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="{{ asset('/adminlte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
-  
+  <link rel="stylesheet" href="{{ asset('/adminlte/plugins/taginput/tagsinput.css') }}"> 
+
   @stack('styles')
 
 </head>
@@ -106,6 +107,53 @@
 <!-- overlayScrollbars -->
 <script src="{{ asset('/adminlte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
 
+<script src="{{ asset('/adminlte/plugins/taginput/tagsinput.js') }}"></script>
+<script src="{{ asset('/adminlte/plugins/taginput/typehead.js') }}"></script>
+
+<script>  
+$("#tag").tagsinput({
+    splitOn: ','
+});
+
+  function add_tag() {
+      event.preventDefault();
+      var sel = document.getElementById("tags");
+      var tag_name = document.getElementById("tag");
+      var tag_names = document.getElementById("tag_name");
+      if(tag_name.value != ""){
+        var opt = document.createElement('option'); 
+        opt.appendChild( document.createTextNode(tag_name.value) ); 
+        opt.value = tag_name.value;  
+        sel.appendChild(opt); 
+        tag_names.value += tag_name.value + ',';
+      }else{
+        alert('Tag is empty!');
+      }
+  }
+
+  function remove_tag() {
+      event.preventDefault();
+      var x = document.getElementById("tags");
+      x.remove(x.selectedIndex);
+  }
+
+  function validate(){
+      event.preventDefault();
+      var x = document.getElementById("tags");
+      var option = document.createElement("option");
+      if( $('#tags').has('option').length < 1 ) {
+        alert("Hello! List of Tag is empty!!");
+      }else{
+        event.preventDefault(); 
+        var tag_names = document.getElementById("tag_name");
+        tag = tag_names.value;
+        tag = tag.slice(0, tag.length - 1);
+        tag_names.value = tag;
+        document.getElementById('form_tag').submit();
+      }
+  }
+
+</script> 
 <!-- receive push script from other page -->
 @stack('scripts')
 

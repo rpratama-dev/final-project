@@ -47,10 +47,9 @@
 
             <div class="row ml-1">
               <div>
-                <div class="float-left">
-                    @foreach (explode (",", $question->tag) as $key => $value)
-                        {{ $loop->first ? '' : '' }} 
-                    <button type="button" class="btn btn-warning btn-xs">{{ $value }}</button>  
+                <div class="float-left">{{-- $value->pivot->tag_id get vivot data --}}
+                    @foreach ($question->tags as $key => $value) 
+                      <a href="{{ route('question.tag-post', ['tag_id' => $value->pivot->tag_id ]) }}"><button type="button" class="btn btn-warning btn-xs">{{ $value->tag_name }}</button></a>  
                     @endforeach
                 </div> 
               </div>
@@ -58,7 +57,7 @@
                 <div class="user-block float-right">
                     <img class="img-circle img-bordered-sm" src="{{ asset($question->user->photo_dir) }}" alt="User Image">
                     <span class="username">
-                      <a href="#">{{ $question->user->name }}</a> 
+                      <a href="{{ route('question.user-post', ['user_id' => $question->user->id ]) }}">{{ $question->user->name }}</a> 
                     </span>
                     <span class="description">reputasi ({{ $question->user->point_reputasi }})</span>
                 </div> 

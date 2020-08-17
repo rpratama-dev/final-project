@@ -1,4 +1,4 @@
-@foreach($answers as $answer) 
+@foreach($question->answer()->orderBy('is_best_answer', 'desc')->get() as $answer) 
 <div class="post clearfix">   
     <table class="table border-0 p-0 m-0" style="border:0">
         <tr class=""> 
@@ -9,7 +9,7 @@
                       <i class="fas fa-caret-up mr-1" onclick="
                       event.preventDefault(); document.getElementById('answer_upvote{{ $answer->id }}').submit();"></i>
                     </span> </a>
-                  <span class="text-xl col-md-12 mr-2"> {{ app(App\Http\Controllers\Answer\VoteAnswerController::class)->count_vote($answer->id) }} </span>
+                  <span class="text-xl col-md-12 mr-2"> {{ $answer->votes }} </span>
                   <a href="{{ route('vote-answer.store') }}"><span class="link-black col-md-12 text-xl mr-1" title="This question does not show any research effort; it is unclear or not useful"><i class="fas fa-caret-down mr-1"onclick="
                       event.preventDefault(); document.getElementById('answer_downvote{{ $answer->id }}').submit();"></i></span></a>
                 </div> 
@@ -73,11 +73,11 @@
                 </div>
                 <div class="ml-auto mr-3 mt-2">
                     <div class="user-block float-right">
-                        <img class="img-circle img-bordered-sm" src="{{ asset($answer->photo_dir) }}" alt="User Image">
+                        <img class="img-circle img-bordered-sm" src="{{ asset($answer->user->photo_dir) }}" alt="User Image">
                         <span class="username">
-                          <a href="#">{{ $answer->name }}</a> 
+                          <a href="#">{{ $answer->user->name }}</a> 
                         </span>
-                        <span class="description">reputasi ({{ $answer->point_reputasi }})</span>
+                        <span class="description">reputasi ({{ $answer->user->point_reputasi }})</span>
                     </div> 
                 </div>
               </div>
@@ -87,10 +87,10 @@
                       //$answer_comments = app(App\Http\Controllers\Answer\AnswerCommentController::class)->getCommentAnswer($answer->id);  
                      @endphp
 
-                     @foreach(app(App\Http\Controllers\Answer\AnswerCommentController::class)->getCommentAnswer($answer->id) as $answer_coment)
+                     @foreach($answer->comment()->orderBy('id', 'asc')->get() as $answer_coment)
                     <tr class="mt-0 p-0"> 
                       <td class="mt-0 p-0">
-                        <span class="description p-0">{{ $answer_coment->comment }} – <a href="">{{ $answer_coment->name }}</a> {{ $answer_coment->created_at }}</span> </td>
+                        <span class="description p-0">{{ $answer_coment->comment }} – <a href="">{{ $answer_coment->user->name }}</a> {{ $answer_coment->created_at }}</span> </td>
                     </tr>
                     @endforeach 
                   </table>

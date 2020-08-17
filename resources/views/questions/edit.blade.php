@@ -14,7 +14,7 @@
             @method('PUT')
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Create Question</h3>
+                    <h3 class="card-title">Edit Your Question</h3>
                 </div>
                 <div class="card-body">
                     <div class="form-group">

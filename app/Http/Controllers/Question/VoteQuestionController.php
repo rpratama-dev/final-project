@@ -52,6 +52,7 @@ class VoteQuestionController extends Controller
         $vote = VoteQuestion::where('user_id', '=',  Auth::user()->id)
                     ->where('question_id', '=',  $request->question_id)
                     ->get();
+        //dd($vote);
 
         if (count($vote) > 0){
             return redirect(route('question.show', ['question' => $request->question_id]))->with('success','hanya bisa vote satu kali')->with('alert', "warning");
@@ -126,12 +127,5 @@ class VoteQuestionController extends Controller
     public function destroy(VoteQuestion $voteQuestion)
     {
         //
-    }
-
-    public function count_vote($question_id)
-    {  
-        $vote = Question::find($question_id);
-        //dd($vote);
-        return $vote->votes;
-    }
+    } 
 }

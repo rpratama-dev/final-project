@@ -15,4 +15,20 @@ class Answer extends Model
     {
         return $this->belongsTo('App\Models\Question\Question');
     }
+
+    /**
+     * Get the user that owns the post.
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
+    /**
+     * Get the comment for the question.
+     */
+    public function comment()
+    {
+        return $this->hasMany('App\Models\Answer\AnswerComment');
+    }
 }

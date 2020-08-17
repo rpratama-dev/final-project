@@ -35,8 +35,19 @@ class TagController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    { 
+        dd($request->tag_name);
+        $request->validate([
+            'tag' => 'required',] , 
+                ['required' => 'The :attribute field is required.',]);
+
+        foreach ($request->select_tag_name as $key => $value) { 
+            $tag = Tag::updateOrCreate( 
+                        ['tag_name' => $request->tag] 
+                    );
+        }
+
+        return Redirect::back()->with('success','Added Tag Successful !');
     }
 
     /**
