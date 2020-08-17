@@ -93,22 +93,35 @@
               <div class="modal-body">
                 <div class="form-group">
                   <div class="input-group mb-3"> 
-                    <input type="text" class="form-control text-dark taginput" id="tag" name="tag" placeholder="Enter Tag ..." data-role="tagsinput">
-                    <input type="hidden" class="form-control text-dark" id="tag_name" name="tag_name" placeholder="">
+                    <input type="text" class="form-control text-dark" id="tag" name="tag" placeholder="Enter Tag ..." data-role="tagsinput"> 
                     <div class="input-group-prepend">
                       <button type="button" class="btn btn-info" onclick="add_tag()">Add Tag</button>
                     </div>
                     <!-- /btn-group -->
                   </div> 
                 </div>
-                <div class="form-group">
-                  <label>List tag to save, dont forget to click Save Change</label>
-                  <select multiple class="form-control" id="tags" name="tags[]"> 
-                  </select>  
-                  </select>
-                  <div class="input-group-prepend float-left mt-1">
-                      <button type="button" class="btn btn-sm btn-danger" onclick="remove_tag()">Remove Selected Tag</button>
-                  </div>
+                <div class="card-body table-responsive p-0" style="height: 300px;">
+                  <table class="table table-head-fixed text-nowrap"> 
+                    <thead>
+                      <tr> 
+                        <th style="width: 35px">#</th>  
+                        <th>Tag Name</th> 
+                        <th>Action <code>.Comingsoon</code></th> 
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>Comingsoon</td>
+                        <td><span class="badge badge-success">Shipped</span></td> 
+                      </tr>
+                      <tr>
+                        <td>1</a></td>
+                        <td>Comingsoon</td>
+                        <td><span class="badge badge-warning">Pending</span></td> 
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
               <div class="modal-footer justify-content-between">

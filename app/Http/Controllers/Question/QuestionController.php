@@ -81,39 +81,8 @@ class QuestionController extends Controller
      */
     public function show(Question $question) 
     {
-        return view('questions.show', compact('question'));
-        //$answers = Answer::where('question_id', $question->id)->orderBy('is_best_answer', 'desc')->get();
-        //dd($answers);
-        // Retrieve a model by its primary key...
-        $user = User::find($question->user_id);
-        // get question_comment
-        $question_comments = DB::table('question_comments') 
-            ->leftJoin('users', 'question_comments.user_id', '=', 'users.id')
-            ->selectRaw('question_comments.*, users.name')
-            ->where('question_comments.question_id','=', $question->id)
-            ->groupBy('question_comments.id')
-            ->get();  
-            
-        // get best answer where jawaban_terbaik_id
-        $answers = DB::table('answers') 
-            ->leftJoin('users', 'answers.user_id', '=', 'users.id')
-            ->selectRaw('answers.*, users.name, users.name, users.photo_dir, users.point_reputasi')
-            ->where('answers.question_id','=', $question->id)
-            ->groupBy('answers.id')
-            ->orderBy('is_best_answer', 'desc')
-            ->get();
-    
-        
-        //dd($answers);  
-         
-
-        //dd($question_comments);
-        return view('questions.show', [
-            "question" => $question, "user" => $user, 
-            'question_comments' => $question_comments,
-            'answers' => $answers, 
-        ])
-            ->with('page', 'Detail Question');
+        // Retrieve a model by its primary key... 
+        return view('questions.show', compact('question')); 
     }
 
     /**

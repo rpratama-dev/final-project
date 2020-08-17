@@ -121,13 +121,5 @@ class VoteAnswerController extends Controller
     public function destroy(VoteAnswer $voteAnswer)
     {
         //
-    }
-
-
-    public function count_vote($answer_id)
-    {  
-        $vote = Answer::find($answer_id);
-        //dd($vote);
-        return $vote->votes;
-    }
+    } 
 }
