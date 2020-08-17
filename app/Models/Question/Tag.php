@@ -13,6 +13,14 @@ class Tag extends Model
      */
     public function questions()
     {
-        return $this->belongsToMany('App\Models\Question\Question'); 
+        return $this->belongsToMany('App\Models\Question\Question', 'question_has_tags'); 
+    }
+
+    /**
+     * Get all of the posts that are assigned this tag.
+     */
+    public function questions_morp()
+    {
+        return $this->morphedByMany('App\Models\Question\Question', 'question_has_tag');
     }
 }

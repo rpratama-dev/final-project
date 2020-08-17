@@ -94,9 +94,8 @@
 						<div class="row ml-1">
 			              	<div>
 				                <div class="float-left">
-				                    @foreach (explode (",", $question->tag) as $key => $value)
-				                        {{ $loop->first ? '' : '' }} 
-				                    <button type="button" class="btn btn-warning btn-xs">{{ $value }}</button>  
+				                    @foreach ($question->tags as $key => $value)
+                      					<a href="{{ route('question.tag-post', ['tag_id' => $value->pivot->tag_id ]) }}"><button type="button" class="btn btn-warning btn-xs">{{ $value->tag_name }}</button></a>  
 				                    @endforeach
 				                </div> 
 				            </div>

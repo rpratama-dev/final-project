@@ -185,13 +185,13 @@ class QuestionController extends Controller
     // Function get question by tag
     public function tag_question($tag_id)
     {
-        /**
-        $tag = Question::find($tag_id); 
+        //**
+        $tag = Tag::find($tag_id); 
         $questions = $tag->questions()->orderBy('id', 'asc')->get();
 
         return view('questions.index', compact('questions'))
             ->with('page', 'Question by Tag : '. $tag->tag_name); 
-        */
+        //*/
     }
 
     // Function Validasi

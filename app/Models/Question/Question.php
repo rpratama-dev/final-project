@@ -33,10 +33,12 @@ class Question extends Model
     }
 
     /**
-     * The tags that belong to the question.
+     * Get all of the tags for the post.
+     * ManyToMany [question, tag, question_has_tag]
      */
     public function tags()
     {
         return $this->belongsToMany('App\Models\Question\Tag', 'question_has_tags');
     }
+ 
 }
